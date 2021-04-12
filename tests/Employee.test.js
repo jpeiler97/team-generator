@@ -1,6 +1,6 @@
 const Employee = require("../lib/employee");
 
-describe("Employee", () => {
+describe("Employee class", () => {
   it("should take an employee name as a parameter", () => {
     const testName = "John";
     expect(new Employee("John", 1, "john@john.com").name).toBe(testName);
