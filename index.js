@@ -29,78 +29,85 @@ function startPrompts() {
             },
           ])
           .then((data) => {
-            let employeeRole = data.role;
-            initialPrompts(employeeRole);
-          }).then;
-        //   .then(console.log(employeeList));
+            let role = data.role;
+            inquirer
+              .prompt([
+                {
+                  type: "input",
+                  name: "name",
+                  message: "What is your employees name?",
+                },
+                {
+                  type: "input",
+                  name: "id",
+                  message: "What is your employee's ID number?",
+                },
+                {
+                  type: "input",
+                  name: "email",
+                  message: "What is your employee's Email?",
+                },
+                {
+                  type: "input",
+                  name: "officeNumber",
+                  message: "What is your employee's office number?",
+                  when: role === "Manager",
+                },
+                {
+                  type: "input",
+                  name: "school",
+                  message: "What is your employee's school name?",
+                  when: role === "Intern",
+                },
+                {
+                  type: "input",
+                  name: "github",
+                  message: "What is your employee's github account?",
+                  when: role === "Engineer",
+                },
+              ])
+              .then((data) => {
+                let empName = data.name;
+                let empId = data.id;
+                let empEmail = data.email;
+
+                if (role === "Manager") {
+                  const empOfficeNumber = data.officeNumber;
+                  const newEmployee = new Manager(
+                    empName,
+                    empId,
+                    empEmail,
+                    empOfficeNumber
+                  );
+                  employeeList.push(newEmployee);
+                } else if (role === "Intern") {
+                  const empSchool = data.school;
+                  const newEmployee = new Intern(
+                    empName,
+                    empId,
+                    empEmail,
+                    empSchool
+                  );
+                  employeeList.push(newEmployee);
+                } else if (role === "Engineer") {
+                  const empGithub = data.github;
+                  const newEmployee = new Engineer(
+                    empName,
+                    empId,
+                    empEmail,
+                    empGithub
+                  );
+                  employeeList.push(newEmployee);
+                } else {
+                  const newEmployee = new Employee(empName, empId, empEmail);
+                  employeeList.push(newEmployee);
+                }
+                console.log(employeeList);
+                startPrompts();
+              });
+          });
       } else {
         return;
-      }
-    });
-}
-
-function initialPrompts(role) {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "name",
-        message: "What is your employees name?",
-      },
-      {
-        type: "input",
-        name: "id",
-        message: "What is your employee's ID number?",
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "What is your employee's Email?",
-      },
-      {
-        type: "input",
-        name: "officeNumber",
-        message: "What is your employee's office number?",
-        when: role === "Manager",
-      },
-      {
-        type: "input",
-        name: "school",
-        message: "What is your employee's school name?",
-        when: role === "Intern",
-      },
-      {
-        type: "input",
-        name: "github",
-        message: "What is your employee's github account?",
-        when: role === "Engineer",
-      },
-    ])
-    .then((data) => {
-      let empName = data.name;
-      let empId = data.id;
-      let empEmail = data.email;
-
-      if (role === "Manager") {
-        const empOfficeNumber = data.officeNumber;
-        const newEmployee = new Manager(
-          empName,
-          empId,
-          empEmail,
-          empOfficeNumber
-        );
-        employeeList.push(newEmployee);
-      } else if (role === "Intern") {
-        const empSchool = data.school;
-        const newEmployee = new Intern(empName, empId, empEmail, empSchool);
-        employeeList.push(newEmployee);
-      } else if (role === "Engineer") {
-        const empGithub = data.github;
-        const newEmployee = new Engineer(empName, empId, empEmail, empGithub);
-        employeeList.push(newEmployee);
-      } else {
-        const newEmployee = new Employee(empName, empId, empEmail);
-        employeeList.push(newEmployee);
       }
     });
 }
