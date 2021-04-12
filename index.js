@@ -1,32 +1,43 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
+const Employee = require("./lib/employee");
+const Engineer = require("./lib/engineer");
+const Manager = require("./lib/manager");
+const Intern = require("./lib/intern");
 
-inquirer
-  .prompt([
-    {
-      type: "list",
-      name: "prompt",
-      message: "Do you want to add a new employee?",
-      choices: ["yes", "no"],
-    },
-  ])
-  .then((data) => {
-    if (data.prompt === "yes") {
-      inquirer
-        .prompt([
-          {
-            type: "list",
-            name: "role",
-            message: "What is your employees role?",
-            choices: ["Employee", "Manager", "Intern", "Engineer"],
-          },
-        ])
-        .then((data) => {
-          let employeeRole = data.role;
-          initialPrompts(employeeRole);
-        });
-    }
-  });
+const employeeList = [];
+
+function startPrompts() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        name: "prompt",
+        message: "Do you want to add a new employee?",
+        choices: ["yes", "no"],
+      },
+    ])
+    .then((data) => {
+      if (data.prompt === "yes") {
+        inquirer
+          .prompt([
+            {
+              type: "list",
+              name: "role",
+              message: "What is your employees role?",
+              choices: ["Employee", "Manager", "Intern", "Engineer"],
+            },
+          ])
+          .then((data) => {
+            let employeeRole = data.role;
+            initialPrompts(employeeRole);
+          }).then;
+        //   .then(console.log(employeeList));
+      } else {
+        return;
+      }
+    });
+}
 
 function initialPrompts(role) {
   inquirer
@@ -66,7 +77,32 @@ function initialPrompts(role) {
       },
     ])
     .then((data) => {
+      let empName = data.name;
+      let empId = data.id;
+      let empEmail = data.email;
+
       if (role === "Manager") {
+        const empOfficeNumber = data.officeNumber;
+        const newEmployee = new Manager(
+          empName,
+          empId,
+          empEmail,
+          empOfficeNumber
+        );
+        employeeList.push(newEmployee);
+      } else if (role === "Intern") {
+        const empSchool = data.school;
+        const newEmployee = new Intern(empName, empId, empEmail, empSchool);
+        employeeList.push(newEmployee);
+      } else if (role === "Engineer") {
+        const empGithub = data.github;
+        const newEmployee = new Engineer(empName, empId, empEmail, empGithub);
+        employeeList.push(newEmployee);
+      } else {
+        const newEmployee = new Employee(empName, empId, empEmail);
+        employeeList.push(newEmployee);
       }
     });
 }
+
+startPrompts();
