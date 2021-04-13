@@ -7,25 +7,60 @@ const Intern = require("./lib/intern");
 
 const employeeList = [];
 
+function initialPrompts() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "What is their name?",
+      },
+      {
+        type: "input",
+        name: "id",
+        message: "What is their ID number?",
+      },
+      {
+        type: "input",
+        name: "email",
+        message: "What is their Email?",
+      },
+      {
+        type: "input",
+        name: "officeNumber",
+        message: "What is their office number?",
+      },
+    ])
+    .then((data) => {
+      const empName = data.name;
+      const empId = data.id;
+      const empEmail = data.email;
+      const empOfficeNumber = data.officeNumber;
+      const newManager = new Manager(empName, empId, empEmail, empOfficeNumber);
+      employeeList.push(newManager);
+      startPrompts();
+    });
+}
+
 function startPrompts() {
   inquirer
     .prompt([
       {
         type: "list",
         name: "prompt",
-        message: "Do you want to add a new employee?",
-        choices: ["yes", "no"],
+        message: "Would you like to add a new employee?",
+        choices: ["Yes", "No"],
       },
     ])
     .then((data) => {
-      if (data.prompt === "yes") {
+      if (data.prompt === "Yes") {
         inquirer
           .prompt([
             {
               type: "list",
               name: "role",
               message: "What is your employees role?",
-              choices: ["Employee", "Manager", "Intern", "Engineer"],
+              choices: ["Employee", "Intern", "Engineer"],
             },
           ])
           .then((data) => {
@@ -35,34 +70,28 @@ function startPrompts() {
                 {
                   type: "input",
                   name: "name",
-                  message: "What is your employees name?",
+                  message: "What is their name?",
                 },
                 {
                   type: "input",
                   name: "id",
-                  message: "What is your employee's ID number?",
+                  message: "What is their ID number?",
                 },
                 {
                   type: "input",
                   name: "email",
-                  message: "What is your employee's Email?",
-                },
-                {
-                  type: "input",
-                  name: "officeNumber",
-                  message: "What is your employee's office number?",
-                  when: role === "Manager",
+                  message: "What is their Email?",
                 },
                 {
                   type: "input",
                   name: "school",
-                  message: "What is your employee's school name?",
+                  message: "What is their school name?",
                   when: role === "Intern",
                 },
                 {
                   type: "input",
                   name: "github",
-                  message: "What is your employee's github account?",
+                  message: "What is their github account?",
                   when: role === "Engineer",
                 },
               ])
@@ -71,16 +100,7 @@ function startPrompts() {
                 let empId = data.id;
                 let empEmail = data.email;
 
-                if (role === "Manager") {
-                  const empOfficeNumber = data.officeNumber;
-                  const newEmployee = new Manager(
-                    empName,
-                    empId,
-                    empEmail,
-                    empOfficeNumber
-                  );
-                  employeeList.push(newEmployee);
-                } else if (role === "Intern") {
+                if (role === "Intern") {
                   const empSchool = data.school;
                   const newEmployee = new Intern(
                     empName,
@@ -112,4 +132,7 @@ function startPrompts() {
     });
 }
 
-startPrompts();
+console.log("Welcome to the Team Profile Generator!");
+console.log("**************************************\n");
+console.log("Please enter data for your team manager.\n");
+initialPrompts();
