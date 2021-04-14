@@ -60,7 +60,7 @@ function startPrompts() {
               type: "list",
               name: "role",
               message: "What is your employees role?",
-              choices: ["Employee", "Intern", "Engineer"],
+              choices: ["Intern", "Engineer"],
             },
           ])
           .then((data) => {
@@ -109,7 +109,7 @@ function startPrompts() {
                     empSchool
                   );
                   employeeList.push(newEmployee);
-                } else if (role === "Engineer") {
+                } else {
                   const empGithub = data.github;
                   const newEmployee = new Engineer(
                     empName,
@@ -117,9 +117,6 @@ function startPrompts() {
                     empEmail,
                     empGithub
                   );
-                  employeeList.push(newEmployee);
-                } else {
-                  const newEmployee = new Employee(empName, empId, empEmail);
                   employeeList.push(newEmployee);
                 }
                 console.log(employeeList);
