@@ -169,18 +169,8 @@ const lastHTML = `
 </html>`;
 
 function writeHTML() {
-  fs.writeFile("./dist/index.html", firstHTML, (err) =>
-    err ? console.error(err) : console.log("Added initial HTML.")
-  );
-  fs.appendFile("./dist/index.html", bodyHTML, (err) =>
-    err ? console.error(err) : console.log("Added employee cards.")
-  );
-  fs.appendFile("./dist/index.html", lastHTML, (err) =>
-    err
-      ? console.error(err)
-      : console.log(
-          "HTML Document finished. Generated HTML with CSS Styling is located in the 'dist' directory."
-        )
+  fs.writeFile("./dist/index.html", firstHTML + bodyHTML + lastHTML, (err) =>
+    err ? console.error(err) : console.log("Added HTML file.")
   );
 }
 
