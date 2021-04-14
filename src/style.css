@@ -1,3 +1,12 @@
+/* 
+Dark blue: #000B4F
+Blue: #20368F
+Light blue: #829CD0
+Light gray: #EBEBEB
+Gray: #6D6D6D
+Dark gray: #323232
+*/
+
 * {
   box-sizing: border-box;
   width: 100%;
@@ -25,9 +34,14 @@ header {
 }
 
 .welcome-message h2 {
-  flex: 1 0 100%;
-  background-color: gray;
+  background-color: #ebebeb;
   width: 20%;
   padding: 20px;
   text-align: center;
+  box-shadow: 5px 5px 5px gray;
+}
+
+.card-header {
+  background-color: #323232;
+  color: white;
 }
