@@ -170,18 +170,22 @@ const lastHTML = `
 
 function writeHTML() {
   fs.writeFile("./dist/index.html", firstHTML, (err) =>
-    err ? console.error(err) : console.log("Success!")
+    err ? console.error(err) : console.log("Added initial HTML.")
   );
   fs.appendFile("./dist/index.html", bodyHTML, (err) =>
-    err ? console.error(err) : console.log("Success!")
+    err ? console.error(err) : console.log("Added employee cards.")
   );
   fs.appendFile("./dist/index.html", lastHTML, (err) =>
-    err ? console.error(err) : console.log("Success!")
+    err
+      ? console.error(err)
+      : console.log(
+          "HTML Document finished. Generated HTML with CSS Styling is located in the 'dist' directory."
+        )
   );
 }
 
 function writeHTMLCards(employee, i, array) {
-  if (i / 3 === 1 && i !== array.length) {
+  if (i % 3 === 0 && i !== array.length) {
     bodyHTML += `</div>
       <div class="row my-4 justify-content-center">\n`;
   }
