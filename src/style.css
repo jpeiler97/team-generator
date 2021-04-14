@@ -14,6 +14,10 @@ Dark gray: #323232
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+body {
+  background-image: url("../assets/images/photo-1461749280684-dccba630e2f6.jpg");
+  background-size: cover;
+}
 header {
   display: flex;
   height: 100px;
@@ -38,7 +42,7 @@ header {
   width: 20%;
   padding: 20px;
   text-align: center;
-  box-shadow: 5px 5px 5px gray;
+  box-shadow: 5px 5px 5px rgb(0, 0, 0);
 }
 
 .card-header {
