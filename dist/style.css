@@ -1,0 +1,47 @@
+/* 
+Dark blue: #000B4F
+Blue: #20368F
+Light blue: #829CD0
+Light gray: #EBEBEB
+Gray: #6D6D6D
+Dark gray: #323232
+*/
+
+* {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+header {
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #20368f;
+  font-size: 40px;
+}
+
+.welcome-message {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+  justify-items: center;
+  align-items: center;
+}
+
+.welcome-message h2 {
+  background-color: #ebebeb;
+  width: 20%;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 5px 5px 5px gray;
+}
+
+.card-header {
+  background-color: #323232;
+  color: white;
+}
