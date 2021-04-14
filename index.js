@@ -138,7 +138,7 @@ console.log("Please enter data for your team manager.\n");
 initialPrompts();
 
 const firstHTML = `
-  !DOCTYPE html>
+  <!DOCTYPE html>
     <html lang="en">
       <head>
       <meta charset="UTF-8" />
