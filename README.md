@@ -40,6 +40,7 @@ To use this project:
 6. To view this file, open it in your preferred browser. You may use the HMTL file as needed (remember to copy the style.css file in the /dist folder to keep the styling.)
 
 Functionality demo:
+
 [![Functionality](https://img.youtube.com/vi/YkKOTY-92C8/0.jpg)](https://www.youtube.com/watch?v=YkKOTY-92C8)
 
 <a name="license"></a>
