@@ -1,3 +1,4 @@
+//Imports
 const fs = require("fs");
 const inquirer = require("inquirer");
 const Employee = require("./lib/employee");
@@ -5,9 +6,13 @@ const Engineer = require("./lib/engineer");
 const Manager = require("./lib/manager");
 const Intern = require("./lib/intern");
 
+//Declaring empty array to push new employees
 const employeeList = [];
+
+//Declaring string template literal to add HTML depending on results of prompts
 let bodyHTML = ``;
 
+//Function to initialize prompts (starting with info about the manager)
 function initialPrompts() {
   inquirer
     .prompt([
@@ -33,16 +38,20 @@ function initialPrompts() {
       },
     ])
     .then((data) => {
+      //Defines new Manager() using input given by user.
       const empName = data.name;
       const empId = data.id;
       const empEmail = data.email;
       const empOfficeNumber = data.officeNumber;
       const newManager = new Manager(empName, empId, empEmail, empOfficeNumber);
+
+      //Adds newManager to employeeList array
       employeeList.push(newManager);
       startPrompts();
     });
 }
 
+//Starts series prompts that ask for 'intern' or 'engineer'
 function startPrompts() {
   inquirer
     .prompt([
@@ -54,6 +63,7 @@ function startPrompts() {
       },
     ])
     .then((data) => {
+      //Starts prompts if user selects 'Yes'
       if (data.prompt === "Yes") {
         inquirer
           .prompt([
@@ -65,6 +75,7 @@ function startPrompts() {
             },
           ])
           .then((data) => {
+            //Declaring role chosen in previous prompt in order to display the correct final prompt
             let role = data.role;
             inquirer
               .prompt([
@@ -97,6 +108,7 @@ function startPrompts() {
                 },
               ])
               .then((data) => {
+                //Defines either new Intern() or Engineer() object depending on the role chosen in the prompts
                 let empName = data.name;
                 let empId = data.id;
                 let empEmail = data.email;
@@ -120,23 +132,20 @@ function startPrompts() {
                   );
                   employeeList.push(newEmployee);
                 }
-                console.log(employeeList);
-
+                //Restarts intern/engineer prompts once newEmployee has been pushed to employeeList
                 startPrompts();
               });
           });
       } else {
+        //If the user chooses 'No' when asked if they want to add a new employee, then the prompts will end
+        //and the HTML document will be created, based on each employee's information
         employeeList.forEach(writeHTMLCards);
         writeHTML();
       }
     });
 }
 
-console.log("Welcome to the Team Profile Generator!");
-console.log("**************************************\n");
-console.log("Please enter data for your team manager.\n");
-initialPrompts();
-
+//HTML to be written to file before dynamically generated HMTL
 const firstHTML = `
   <!DOCTYPE html>
     <html lang="en">
@@ -161,6 +170,7 @@ const firstHTML = `
       <div class="profile-area container-fluid">
       <div class="row my-4 justify-content-center">`;
 
+//HTML to be written to file after dynamically generated HTML
 const lastHTML = `
     </div>
     </div>
@@ -168,18 +178,21 @@ const lastHTML = `
   </body>
 </html>`;
 
+//Function to create an HTML file using firstHTML, bodyHTML, and lastHTML.
 function writeHTML() {
   fs.writeFile("./dist/index.html", firstHTML + bodyHTML + lastHTML, (err) =>
     err ? console.error(err) : console.log("Added HTML file.")
   );
 }
 
+//Callback function that writes HMTL displaying a card for each employee's info
 function writeHTMLCards(employee, i, array) {
   if (i % 3 === 0 && i !== array.length) {
     bodyHTML += `</div>
       <div class="row my-4 justify-content-center">\n`;
   }
 
+  //Different HTML based on the role of the employee
   if (employee.getRole() === "Manager") {
     bodyHTML += `
       <div class="col-3">
@@ -224,3 +237,9 @@ function writeHTMLCards(employee, i, array) {
     </div>\n`;
   }
 }
+
+//Initialization
+console.log("Welcome to the Team Profile Generator!");
+console.log("**************************************\n");
+console.log("Please enter data for your team manager.\n");
+initialPrompts();
