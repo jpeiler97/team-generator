@@ -43,6 +43,12 @@ Functionality demo:
 
 [![Functionality](https://img.youtube.com/vi/YkKOTY-92C8/0.jpg)](https://www.youtube.com/watch?v=YkKOTY-92C8)
 
+Screenshots:
+
+![Git Bash](assets/images/screenshot1.png?raw=true "Git Bash")
+
+![Generated HTML page](assets/images/screenshot2.png?raw=true "Generated HTML page")
+
 <a name="license"></a>
 ## License
 This application is covered under the MIT license.
